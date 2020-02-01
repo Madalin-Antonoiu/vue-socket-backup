@@ -1,6 +1,19 @@
-const Express = require("express")(); //constructor (inst. of var app =express())
-const Http = require("http").Server(Express);
-const Socketio = require("socket.io")(Http);
+//Refactored for standard notation
+const express = require('express');
+const app = express();
+const http = require('http').createServer(app);
+const Socketio = require("socket.io")(http);
+const port = 3000;
+
+app.listen(port, () => {
+    console.log(`Example app listening on port ${port}!`)
+});
+
+app.get('/', (req, res) => { 
+    //res.send('Hello World!')
+    app.use(express.static('./client/dist/index.html'))
+})
+
 
 // Only for the Canvas game
 var position = {
@@ -42,7 +55,5 @@ Socketio.on("connection", socket => {
 
 // end of it
 
-Http.listen(3000, () => {
-   console.log("Listening at :3000")
-});
+
     
